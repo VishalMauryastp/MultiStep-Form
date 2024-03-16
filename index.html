@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi-Step Booking Form</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://www.jsdelivr.com/package/npm/react-schedule-meeting"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="booking-form poppins">
+      <form id="bookingForm">
+        <div class="min-h-screen bg-blue-900" id="step1">
+          <div class="w-[90%] mx-auto py-[30px]">
+            <h1 class="text-2xl text-white">Step 1: Select Date and Time</h1>
+            <div class="flex max-md:flex-col gap-8 mt-12">
+              <div class="md:w-[50%]">
+                <img src="./public/hall.jpg" alt="" />
+              </div>
+
+              <div class="mt-8 md:w-[50%]">
+                <div class="flex flex-col">
+                  <label class="text-white" for="date">Select Date:</label>
+                  <input class="px-4 py-2 mt-2" type="date" id="date" />
+                </div>
+                <div class="flex-col flex mt-8">
+                  <label class="text-white" for="time">Select Time:</label>
+                  <input class="px-4 py-2 mt-2" type="time" id="time" />
+                </div>
+                <!-- <div id="calendar"></div> -->
+                <button
+                  class="bg-white  max-md:w-full text-black px-8 py-2 rounded shadow mt-8"
+                  onclick="nextStep()"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- step 2 -->
+        <div class="min-h-screen bg-blue-900" id="step2" style="display: none">
+          <div class="w-[90%] mx-auto py-[30px]">
+            <h1 class="text-2xl text-white">Step 2: General Information</h1>
+            <div
+              class="md:w-[600px] mx-auto rounded mt-8 bg-white flex flex-col gap-4 p-8"
+            >
+              <div>
+                <label for="name">Name</label>
+                <input
+                  class="w-full mt-2 py-2 px-2 bg-transparent border"
+                  type="text"
+                  placeholder="Name"
+                  id="name"
+                />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input
+                  class="w-full mt-2 py-2 px-2 bg-transparent border"
+                  type="email"
+                  placeholder="Email"
+                  id="email"
+                />
+              </div>
+              <div>
+                <label for="phone">Phone</label>
+                <input
+                  class="w-full mt-2 py-2 px-2 bg-transparent border"
+                  type="tel"
+                  placeholder="Phone Number"
+                  id="phone"
+                />
+              </div>
+              <div>
+                <label for="guests">Number of Guests</label>
+                <input
+                  class="w-full mt-2 py-2 px-2 bg-transparent border"
+                  type="number"
+                  placeholder="Number of Guests"
+                  id="guests"
+                />
+              </div>
+              <div>
+                <label for="decoration">Do you want decoration?</label>
+                <select class="mt-2 block w-full p-2 border" id="decoration">
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+              <div class="flex gap-4">
+                <button
+                  class="bg-black/10 text-black px-6 py-2 rounded shadow mt-8"
+                  onclick="prevStep()"
+                >
+                  Previous
+                </button>
+                <button
+                  class="bg-green-400 text-white px-8 py-2 rounded shadow mt-8"
+                  onclick="nextStep()"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- step -3 -->
+        <div class="min-h-screen bg-blue-900" id="step3" style="display: none">
+          <div class="w-[90%] mx-auto py-[30px]">
+            <h1 class="text-2xl text-white">Step 3: Decoration Details</h1>
+            <div class="md:w-[600px] mx-auto rounded mt-8 bg-white p-8">
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <label for="decorationOption1">
+                  <input
+                    type="radio"
+                    id="decorationOption1"
+                    name="decoration"
+                    value="Birthday"
+                  />
+                  <img
+                    class="w-[70%] mx-auto"
+                    src="./public/Birthday.png"
+                    alt=""
+                  />
+                  <p class="text-center mt-2">Birthday</p>
+                </label>
+
+                <label for="decorationOption2">
+                  <input
+                    type="radio"
+                    id="decorationOption2"
+                    name="decoration"
+                    value="Anniversary"
+                  />
+                  <img
+                    class="w-[70%] mx-auto"
+                    src="./public/Anniversary.png"
+                    alt=""
+                  />
+                  <p class="text-center mt-2">Anniversary</p>
+                </label>
+
+                <label for="decorationOption3">
+                  <input
+                    type="radio"
+                    id="decorationOption3"
+                    name="decoration"
+                    value="Romantic Date"
+                  />
+                  <img
+                    class="w-[70%] mx-auto"
+                    src="./public/Congratulations (1).png"
+                    alt=""
+                  />
+                  <p class="text-center mt-2">Romantic Date</p>
+                </label>
+                <label for="decorationOption4">
+                  <input
+                    type="radio"
+                    id="decorationOption4"
+                    name="decoration"
+                    value="Marriage Proposal"
+                  />
+                  <img
+                    class="w-[70%] mx-auto"
+                    src="./public/Marriage Proposal.png"
+                    alt=""
+                  />
+                  <p class="text-center mt-2">Marriage Proposal</p>
+                </label>
+                <label for="decorationOption5">
+                  <input
+                    type="radio"
+                    id="decorationOption5"
+                    name="decoration"
+                    value="Bride to be"
+                  />
+                  <img
+                    class="w-[70%] mx-auto"
+                    src="./public/Bride to be.png"
+                    alt=""
+                  />
+                  <p class="text-center mt-2">Bride to be</p>
+                </label>
+                <label for="decorationOption6">
+                  <input
+                    type="radio"
+                    id="decorationOption6"
+                    name="decoration"
+                    value="Farewell"
+                  />
+                  <img
+                    class="w-[70%] mx-auto"
+                    src="./public/Farewell.png"
+                    alt=""
+                  />
+                  <p class="text-center mt-2">Farewell</p>
+                </label>
+                <label for="decorationOption7">
+                  <input
+                    type="radio"
+                    id="decorationOption7"
+                    name="decoration"
+                    value="Congratulations"
+                  />
+                  <img
+                    class="w-[70%] mx-auto"
+                    src="./public/Congratulations.png"
+                    alt=""
+                  />
+                  <p class="text-center mt-2">Congratulations</p>
+                </label>
+                <label for="decorationOption8">
+                  <input
+                    type="radio"
+                    id="decorationOption8"
+                    name="decoration"
+                    value="Baby Shower"
+                  />
+                  <img
+                    class="w-[70%] mx-auto"
+                    src="./public/Baby Shower.png"
+                    alt=""
+                  />
+                  <p class="text-center mt-2">Baby Shower</p>
+                </label>
+              </div>
+              <div class="flex gap-4">
+                <button
+                  class="bg-black/10 text-black px-6 py-2 rounded shadow mt-8"
+                  onclick="prevStep()"
+                >
+                  Previous
+                </button>
+                <button
+                  class="bg-green-400 text-white px-8 py-2 rounded shadow mt-8"
+                  onclick="nextStep()"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- step--4 -->
+        <div class="min-h-screen bg-blue-900" id="step4" style="display: none">
+          <div class="w-[90%] mx-auto py-[30px]">
+            <div>
+              <h1 class="text-2xl text-white">Step 4: Cake Options</h1>
+            </div>
+            <div
+              class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-8 bg-white p-8 rounded"
+              id="cakeOptionsContainer"
+            ></div>
+            <!-- <div>
+              <label for="cakeOption1">
+                <input
+                  type="checkbox"
+                  id="cakeOption1"
+                  name="cake"
+                  value="Chocolate"
+                />
+                <img src="" alt="" />
+                <p class="mt-1 text-center">Chocolate Cake</p>
+              </label>
+
+              <label for="cakeOption2">
+                <input
+                  type="checkbox"
+                  id="cakeOption2"
+                  name="cake"
+                  value="Vanilla"
+                /> 
+                <img src="" alt="" />
+                <p class="mt-1 text-center">Strawberry Cake</p>
+                </label
+              >
+
+              <label for="cakeOption3">
+                <input
+                  type="checkbox"
+                  id="cakeOption3"
+                  name="cake"
+                  value="Strawberry"
+                />
+                <img src="" alt="" />
+                <p class="mt-1 text-center">Strawberry Cake</p>
+              </label>
+            </div> -->
+            <div class="flex gap-4">
+              <button
+                class="bg-white text-black px-6 py-2 rounded shadow mt-8"
+                onclick="prevStep()"
+              >
+                Previous
+              </button>
+              <button
+                class="bg-green-400 text-white px-8 py-2 rounded shadow mt-8"
+                onclick="nextStep()"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- <div id="cakeOptionsContainer" class="grid grid-cols-2 gap-4"></div> -->
+        </div>
+
+        <!-- step -5 -->
+        <div class="min-h-screen bg-blue-900" id="step5" style="display: none">
+          <div class="w-[90%] mx-auto py-[30px]">
+            <div>
+              <h1 class="text-2xl text-white">Step 5: Extra Gifts</h1>
+            </div>
+
+            <div
+              class="bg-white md:w-[600px] mx-auto p-8 rounded shadow mt-8 lg:mt-0"
+            >
+              <h1 class="text-2xl text-black text-center">Extra Decoration</h1>
+              <div class="grid grid-cols-3 mt-8">
+                <label for="giftOption1">
+                  <input
+                    type="checkbox"
+                    id="giftOption1"
+                    name="gift"
+                    value="Rose Heart (Rs 150)"
+                  />
+                  <img
+                    class="w-[50%] mx-auto"
+                    src="/public/Rose Heart (Rs 150).png"
+                    alt=""
+                  />
+                  <p class="mt-2 text-center">Rose Heart (Rs 150)</p>
+                </label>
+                <label for="giftOption2">
+                  <input
+                    type="checkbox"
+                    id="giftOption2"
+                    name="gift"
+                    value="Candle Path (Rs 300)"
+                  />
+                  <img
+                    class="w-[50%] mx-auto"
+                    src="/public/Candle Path (Rs 300).png"
+                    alt=""
+                  />
+                  <p class="mt-2 text-center">Candle Path (Rs 300)</p>
+                </label>
+
+                <label for="giftOption3">
+                  <input
+                    type="checkbox"
+                    id="giftOption3"
+                    name="gift"
+                    value="LED Numbers (Rs 200)"
+                  />
+                  <img
+                    class="w-[50%] mx-auto"
+                    src="/public/LED Numbers (Rs 200).png"
+                    alt=""
+                  />
+                  <p class="mt-2 text-center">LED Numbers (Rs 200)</p>
+                </label>
+                <br />
+              </div>
+
+              <h1 class="mt-8 text-2xl text-black text-center">GIFTS</h1>
+
+              <div class="grid grid-cols-3 mt-8">
+                <label for="giftOption14">
+                  <input
+                    type="checkbox"
+                    id="giftOption14"
+                    name="gift"
+                    value="Rose Bouquet (Rs 350)"
+                  />
+                  <img
+                    class="w-[50%] mx-auto"
+                    src="/public/Rose Bouquet (Rs 350).png"
+                    alt=""
+                  />
+                  <p class="mt-2 text-center">Rose Bouquet (Rs 350)</p>
+                </label>
+                <label for="giftOption5">
+                  <input
+                    type="checkbox"
+                    id="giftOption5"
+                    name="gift"
+                    value="Small Teddy Bear (Rs 300)"
+                  />
+                  <img
+                    class="w-[50%] mx-auto"
+                    src="/public/Small Teddy Bear (Rs 300).png"
+                    alt=""
+                  />
+                  <p class="mt-2 text-center">Small Teddy Bear (Rs 300)</p>
+                </label>
+
+                <label for="giftOption6">
+                  <input
+                    type="checkbox"
+                    id="giftOption6"
+                    name="gift"
+                    value="Small Heart Pillow(Rs 200)"
+                  />
+                  <img
+                    class="w-[50%] mx-auto"
+                    src="/public/Small Heart Pillow(Rs 200).png"
+                    alt=""
+                  />
+                  <p class="mt-2 text-center">Small Heart Pillow(Rs 200)</p>
+                </label>
+                <br />
+              </div>
+              <!-- <div class="grid grid-cols-3 mt-8">
+                <label for="giftOption1">
+                  <input
+                    type="radio"
+                    id="giftOption1"
+                    name="gift"
+                    value="Rose Heart (Rs 150)"
+                  />
+                  <img
+                    class="w-[50%] mx-auto"
+                    src="/public/Rose Heart (Rs 150).png"
+                    alt=""
+                  />
+                  <p class="mt-2 text-center">Rose Heart (Rs 150)</p>
+                </label>
+                <label for="giftOption2">
+                  <input
+                    type="radio"
+                    id="giftOption2"
+                    name="gift"
+                    value="Candle Path (Rs 300)"
+                  />
+                  <img
+                    class="w-[50%] mx-auto"
+                    src="/public/Candle Path (Rs 300).png"
+                    alt=""
+                  />
+                  <p class="mt-2 text-center">Candle Path (Rs 300)</p>
+                </label>
+
+                <label for="giftOption3">
+                  <input
+                    type="radio"
+                    id="giftOption3"
+                    name="gift"
+                    value="LED Numbers (Rs 200)"
+                  />
+                  <img
+                    class="w-[50%] mx-auto"
+                    src="/public/LED Numbers (Rs 200).png"
+                    alt=""
+                  />
+                  <p class="mt-2 text-center">LED Numbers (Rs 200)</p> </label
+                ><br />
+              </div>
+
+              <h1 class="mt-8 text-2xl text-black text-center">GIFTS</h1>
+
+              <div class="grid grid-cols-3 mt-8">
+                <label for="giftOption14">
+                  <input
+                    type="radio"
+                    id="giftOption1"
+                    name="gift"
+                    value="Rose Bouquet (Rs 350)"
+                  />
+                  <img
+                    class="w-[50%] mx-auto"
+                    src="/public/Rose Bouquet (Rs 350).png"
+                    alt=""
+                  />
+                  <p class="mt-2 text-center">Rose Bouquet (Rs 350)</p>
+                </label>
+                <label for="giftOption5">
+                  <input
+                    type="radio"
+                    id="giftOption2"
+                    name="gift"
+                    value="Small Teddy Bear (Rs 300)"
+                  />
+                  <img
+                    class="w-[50%] mx-auto"
+                    src="/public/Small Teddy Bear (Rs 300).png"
+                    alt=""
+                  />
+                  <p class="mt-2 text-center">Small Teddy Bear (Rs 300)</p>
+                </label>
+
+                <label for="giftOption6">
+                  <input
+                    type="radio"
+                    id="giftOption3"
+                    name="gift"
+                    value="Small Heart Pillow(Rs 200)"
+                  />
+                  <img
+                    class="w-[50%] mx-auto"
+                    src="/public/Small Heart Pillow(Rs 200).png"
+                    alt=""
+                  />
+                  <p class="mt-2 text-center">
+                    Small Heart Pillow(Rs 200)
+                  </p> </label
+                ><br />
+              </div> -->
+
+              <div class="flex gap-4">
+                <button
+                  class="bg-black/10 text-black px-6 py-2 rounded shadow mt-8"
+                  onclick="prevStep()"
+                >
+                  Previous
+                </button>
+                <button
+                  class="bg-green-400 text-white px-8 py-2 rounded shadow mt-8"
+                  onclick="nextStep()"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- step -6 -->
+        <div class="min-h-screen bg-blue-900" id="step6" style="display: none">
+          <div class="w-[90%] mx-auto py-[30px]">
+            <!-- <div>
+
+            </div>
+            <h1>Step 6: Terms and Conditions</h1>
+
+            <input type="checkbox" id="terms" required />
+            <label for="terms">I agree to the terms and conditions</label><br /> -->
+            <div class="md:w-[600px] m-auto bg-white p-8 rounded">
+              <h2 class="text-2xl font-semibold mb-4 text-center">
+                Terms and Conditions
+              </h2>
+
+              <ul class="flex flex-col gap-[12px] mt-8">
+                <li class="list-decimal">
+                  We do NOT provide any movie/OTT accounts. We will do the setup
+                  using your OTT accounts/downloaded content.
+                </li>
+                <li class="list-decimal">
+                  Smoking/Drinking is NOT allowed inside the theater.
+                </li>
+                <li class="list-decimal">
+                  Any DAMAGE caused to theater, including decorative materials
+                  like balloons, lights etc will have to be reimbursed.
+                </li>
+                <li class="list-decimal">
+                  Guests are requested to maintain CLEANLINESS inside the
+                  theater
+                </li>
+                <li class="list-decimal">
+                  Party poppers/Snow sprays/Cold Fire, and any other similar
+                  items are strictly prohibited inside the theater.
+                </li>
+                <li class="list-decimal">
+                  Carrying AADHAAR CARD is mandatory. It will be scanned during
+                  entry.
+                </li>
+                <li class="list-decimal">
+                  Couples under 18 years of age are not allowed to book the
+                  theatre
+                </li>
+                <li class="list-decimal">
+                  Pets are strictly not allowed inside the theatre
+                </li>
+                <li class="list-decimal">
+                  We collect an advance amount of Rs 750 + convenience fee to
+                  book the slot.
+                </li>
+              </ul>
+              <!-- <p class="mt-4">
+                By clicking "Book Now", you agree to our terms and conditions.
+              </p> -->
+
+              <label class="flex gap-2 mt-4" for="terms ">
+                <input type="checkbox" id="terms" required />
+                <p>I agree to the terms and conditions</p></label
+              >
+              <div>
+                <button
+                  class="bg-black/10 text-black px-6 py-2 rounded shadow mt-8"
+                  onclick="prevStep()"
+                >
+                  Previous
+                </button>
+                <button
+                  class="bg-green-500 text-white text-black px-6 py-2 rounded shadow mt-8"
+                  type="submit"
+                >
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script src="App.js"></script>
+  </body>
+</html>
