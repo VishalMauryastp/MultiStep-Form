@@ -84,19 +84,19 @@ function prevStep() {
 function createTimeSlotButtons() {
   if (window.location.pathname.includes("vip")) {
     var timeSlots = [
-      "09:00 AM to 12:00 PM  ",
-      "12:30 PM to 03:30 PM",
-      "04:30 PM to 05:30 PM",
-      "06:00 PM to 09:00 PM",
-      "09:30 PM to 12:30 PM",
-    ];
-  } else {
-    var timeSlots = [
       "09:30 AM to 12:30 PM  ",
       "01:00 PM to 04:00 PM",
       "05:00 PM to 06:00 PM",
       "06:30 PM to 09:30 PM",
       "10:30 PM to 01:00 PM",
+    ];
+  } else {
+    var timeSlots = [
+      "09:00 AM to 12:00 PM  ",
+      "12:30 PM to 03:30 PM",
+      "04:30 PM to 05:30 PM",
+      "06:00 PM to 09:00 PM",
+      "09:30 PM to 12:30 PM",
     ];
   }
 
@@ -185,3 +185,106 @@ form.addEventListener("submit", function (event) {
 
   console.log("Booking Data:", bookingData);
 });
+
+// input vaildation
+
+function step1() {
+  const selectedDate = new Date(document.getElementById("date").value);
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+
+  if (!selectedDate || isNaN(selectedDate.getTime())) {
+    return alert("Please select a valid date!");
+  }
+
+  if (selectedDate < currentDate) {
+    return alert("Please select a date today or in the future!");
+  }
+
+  if (!selectedTime) {
+    return alert("Please select a time slot!");
+  }
+
+  nextStep();
+}
+
+function step2() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
+  const guests = document.getElementById("guests").value;
+  const decoration = document.getElementById("decoration").value;
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phonePattern = /^\d{10}$/;
+
+  if (!name) {
+    return alert("Please enter your name!");
+  }
+  if (!email) {
+    return alert("Please enter your email!");
+  }
+
+  if (!emailPattern.test(email)) {
+    return alert("Please enter a valid email address!");
+  }
+  if (!phone) {
+    return alert("Please enter your phone number!");
+  }
+
+  if (!phonePattern.test(phone)) {
+    return alert("Please enter a valid 10-digit phone number!");
+  }
+  if (!guests) {
+    return alert("Please enter the number of guests!");
+  }
+  if (!decoration) {
+    return alert("Please select the decoration option!");
+  }
+
+  nextStep();
+}
+
+function step3() {
+  const decorationDetails = document.querySelector(
+    'input[name="decoration"]:checked'
+  )
+    ? document.querySelector('input[name="decoration"]:checked').value
+    : "None";
+
+  // if(!decorationDetails){
+  //   return alert("Please select the one decoration option!")
+  // }
+  if (decorationDetails === "None") {
+    alert("Please select a decoration option!");
+    return;
+  }
+
+  nextStep();
+}
+function step4() {
+  const cakes = [
+    ...document.querySelectorAll('input[name="cake"]:checked'),
+  ].map((checkbox) => checkbox.value);
+
+  // Check if any cake option is selected
+  if (cakes.length === 0) {
+    alert("Please select at least one cake option!");
+    return;
+  }
+
+  nextStep();
+}
+function step5() {
+  var gifts = [];
+  var checkboxes = document.querySelectorAll('input[name="gift"]:checked');
+  checkboxes.forEach(function (checkbox) {
+    gifts.push(checkbox.value);
+  });
+  if (gifts.length === 0) {
+    alert("Please select at least one gift or decoration !");
+    return;
+  }
+
+  nextStep();
+}
