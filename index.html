@@ -35,15 +35,19 @@
                 </div>
                 <div class="flex-col flex mt-8">
                   <label class="text-white" for="time">Select Time:</label>
-                  <input class="px-4 py-2 mt-2" type="time" id="time" />
+                  <!-- <div id="timeSlots" class=""></div> -->
+                  <div id="timeSlots" class="flex flex-wrap gap-4 mt-2"></div>
+                    <!-- Time slot buttons will be inserted here dynamically -->
+                  </div>
+                  <!-- <input class="px-4 py-2 mt-2" type="time" id="time" /> -->
+                  <button
+                    class="bg-white max-md:w-full text-black px-8 py-2 rounded shadow mt-8"
+                    onclick="nextStep()"
+                  >
+                    Next
+                  </button>
                 </div>
                 <!-- <div id="calendar"></div> -->
-                <button
-                  class="bg-white  max-md:w-full text-black px-8 py-2 rounded shadow mt-8"
-                  onclick="nextStep()"
-                >
-                  Next
-                </button>
               </div>
             </div>
           </div>
@@ -618,5 +622,6 @@
     </div>
 
     <script src="App.js"></script>
+
   </body>
 </html>

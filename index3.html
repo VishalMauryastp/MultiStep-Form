@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Slot Selector</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="p-8">
+    <div id="timeSlots" class="flex flex-wrap gap-4"></div>
+
+    <script>
+        // Function to generate time slot buttons
+        function createTimeSlotButtons() {
+          const timeSlots = [
+            "10:00 AM",
+            "12:00 PM",
+            "02:00 PM",
+            "04:00 PM",
+            "06:00 PM",
+            "08:00 PM",
+            "10:00 PM",
+          ];
+
+          const timeSlotsContainer = document.getElementById("timeSlots");
+
+          const buttonsHTML = timeSlots.map(slot => {
+            return `
+              <button 
+                class="bg-white text-black px-4 py-2 rounded shadow  focus:outline-none"
+                onclick="selectTime(this, '${slot}')"
+              >
+                ${slot}
+              </button>
+            `;
+          }).join('');
+
+          timeSlotsContainer.innerHTML = buttonsHTML;
+        }
+
+        // Function to handle time slot selection
+        function selectTime(clickedButton, selectedTime) {
+          const buttons = document.querySelectorAll("#timeSlots button");
+          buttons.forEach((button) => {
+            button.classList.remove("bg-green-400"); // Deselect all buttons
+          });
+
+          clickedButton.classList.add("bg-green-400"); // Select the clicked button
+          
+          // Log the selected time
+          console.log("Selected Time:", selectedTime);
+        }
+
+        // Call function to generate time slot buttons
+        createTimeSlotButtons();
+    </script>
+</body>
+</html>

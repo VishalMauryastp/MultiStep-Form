@@ -81,6 +81,66 @@ function prevStep() {
   document.getElementById(`step${currentStep}`).style.display = "block";
 }
 
+function createTimeSlotButtons() {
+  if (window.location.pathname.includes("vip")) {
+    var timeSlots = [
+      "09:00 AM to 12:00 PM  ",
+      "12:30 PM to 03:30 PM",
+      "04:30 PM to 05:30 PM",
+      "06:00 PM to 09:00 PM",
+      "09:30 PM to 12:30 PM",
+    ];
+  } else {
+    var timeSlots = [
+      "09:30 AM to 12:30 PM  ",
+      "01:00 PM to 04:00 PM",
+      "05:00 PM to 06:00 PM",
+      "06:30 PM to 09:30 PM",
+      "10:30 PM to 01:00 PM",
+    ];
+  }
+
+  const timeSlotsContainer = document.getElementById("timeSlots");
+
+  const buttonsHTML = timeSlots
+    .map((slot) => {
+      return `
+        <button 
+          class="bg-white text-[12px] flex-grow md:flex-[0_0_200px] text-black px-4 py-2 rounded shadow focus:outline-none"
+          onclick="selectTime(this, '${slot}')"
+        >
+          ${slot}
+        </button>
+      `;
+    })
+    .join("");
+
+  timeSlotsContainer.innerHTML = buttonsHTML;
+}
+
+let selectedTime = "";
+
+// Function to handle time slot selection
+function selectTime(clickedButton, slot) {
+  const buttons = document.querySelectorAll("#timeSlots button");
+  buttons.forEach((button) => {
+    button.classList.remove("bg-green-400"); // Deselect all buttons
+    button.classList.add("bg-white"); // Deselect all buttons
+  });
+
+  clickedButton.classList.remove("bg-white"); // Select the clicked button
+  clickedButton.classList.add("bg-green-400"); // Select the clicked button
+
+  // Set the selectedTime variable
+  selectedTime = slot;
+  // Log the selected time
+  console.log("Selected Time:", selectedTime);
+}
+
+// Call function to generate time slot buttons
+createTimeSlotButtons();
+//
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   const name = document.getElementById("name").value;
@@ -88,7 +148,7 @@ form.addEventListener("submit", function (event) {
   const phone = document.getElementById("phone").value;
   const guests = document.getElementById("guests").value;
   const date = document.getElementById("date").value;
-  const time = document.getElementById("time").value;
+  // const time = document.getElementById("time").value;
   const decoration = document.getElementById("decoration").value;
   const decorationDetails = document.querySelector(
     'input[name="decoration"]:checked'
@@ -114,7 +174,8 @@ form.addEventListener("submit", function (event) {
     phone,
     guests,
     date,
-    time,
+    // time:selectedTime,
+    time: selectedTime,
     location: location2,
     decoration,
     decorationDetails,
