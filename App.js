@@ -4,47 +4,47 @@ const form = document.getElementById("bookingForm");
 const cakeOptions = [
   {
     name: "Black Forest Cake (500)",
-    imageUrl: "/public/Black Forest Cake (500).png",
+    imageUrl: "./public/Black Forest Cake (500).png",
   },
   {
     name: "Butterscotch Cake (500)",
-    imageUrl: "/public/Butterscotch Cake (500).png",
+    imageUrl: "./public/Butterscotch Cake (500).png",
   },
   {
     name: "Chocolate Cake (500)",
-    imageUrl: "/public/Chocolate Cake (500).png",
+    imageUrl: "./public/Chocolate Cake (500).png",
   },
   {
     name: "Pineapple Cake (500)",
-    imageUrl: "/public/Pineapple Cake (500).png",
+    imageUrl: "./public/Pineapple Cake (500).png",
   },
   {
     name: "Round Red Velvet Cake (600)",
-    imageUrl: "/public/Round Red Velvet Cake (600).png",
+    imageUrl: "./public/Round Red Velvet Cake (600).png",
   },
   {
     name: "Blueberry Cake (600)",
-    imageUrl: "/public/Blueberry Cake (600).png",
+    imageUrl: "./public/Blueberry Cake (600).png",
   },
   {
     name: "Mango Cake (600)",
-    imageUrl: "/public/Mango Cake (600).png",
+    imageUrl: "./public/Mango Cake (600).png",
   },
   {
     name: "Heart Red Velvet Cake (700)",
-    imageUrl: "/public/Heart Red Velvet Cake (700).png",
+    imageUrl: "./public/Heart Red Velvet Cake (700).png",
   },
   {
     name: "Death by chocolate Cake (700)",
-    imageUrl: "/public//Death by chocolate Cake (700).png",
+    imageUrl: "./public//Death by chocolate Cake (700).png",
   },
   {
     name: "Choco Almond Cake (750)",
-    imageUrl: "/public/Choco Almond Cake (750).png",
+    imageUrl: "./public/Choco Almond Cake (750).png",
   },
   {
     name: "Heart Pinata Cake (850)",
-    imageUrl: "/public/Heart Pinata Cake (850).png",
+    imageUrl: "./public/Heart Pinata Cake (850).png",
   },
 ];
 const cakeOptionsContainer = document.getElementById("cakeOptionsContainer");
@@ -246,45 +246,47 @@ function step2() {
 }
 
 function step3() {
-  const decorationDetails = document.querySelector(
-    'input[name="decoration"]:checked'
-  )
-    ? document.querySelector('input[name="decoration"]:checked').value
-    : "None";
+  // const decorationDetails = document.querySelector(
+  //   'input[name="decoration"]:checked'
+  // )
+  //   ? document.querySelector('input[name="decoration"]:checked').value
+  //   : "None";
 
-  // if(!decorationDetails){
-  //   return alert("Please select the one decoration option!")
+  // // if(!decorationDetails){
+  // //   return alert("Please select the one decoration option!")
+  // // }
+  // if (decorationDetails === "None") {
+  //   alert("Please select a decoration option!");
+  //   return;
   // }
-  if (decorationDetails === "None") {
-    alert("Please select a decoration option!");
-    return;
-  }
 
   nextStep();
 }
 function step4() {
-  const cakes = [
-    ...document.querySelectorAll('input[name="cake"]:checked'),
-  ].map((checkbox) => checkbox.value);
+  // const cakes = [
+  //   ...document.querySelectorAll('input[name="cake"]:checked'),
+  // ].map((checkbox) => checkbox.value);
 
-  // Check if any cake option is selected
-  if (cakes.length === 0) {
-    alert("Please select at least one cake option!");
-    return;
-  }
+  // // Check if any cake option is selected
+  // if (cakes.length === 0) {
+  //   alert("Please select at least one cake option!");
+  //   return;
+  // }
 
   nextStep();
 }
 function step5() {
-  var gifts = [];
-  var checkboxes = document.querySelectorAll('input[name="gift"]:checked');
-  checkboxes.forEach(function (checkbox) {
-    gifts.push(checkbox.value);
-  });
-  if (gifts.length === 0) {
-    alert("Please select at least one gift or decoration !");
-    return;
-  }
+  // var gifts = [];
+  // var checkboxes = document.querySelectorAll('input[name="gift"]:checked');
+  // checkboxes.forEach(function (checkbox) {
+  //   gifts.push(checkbox.value);
+  // });
+  // if (gifts.length === 0) {
+  //   alert("Please select at least one gift or decoration !");
+  //   return;
+  // }
 
   nextStep();
 }
+
+// save locally
