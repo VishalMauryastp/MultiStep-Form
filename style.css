@@ -35,3 +35,9 @@ button {
   display: block;
   margin-top: 10px;
 } */
+
+#entriesTable {
+  overflow-y: auto;
+  /* width: 1000px; */
+}
+

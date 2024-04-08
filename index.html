@@ -31,7 +31,7 @@
               <div class="mt-8 md:w-[50%]">
                 <div class="flex flex-col">
                   <label class="text-white" for="date">Select Date:</label>
-                  <input class="px-4 py-2 mt-2 w-full" type="date" id="date" />
+                  <input class="px-4 py-2 mt-2 w-full" onchange="createTimeSlotButtons()" type="date" id="date" />
                 </div>
                 <div class="flex-col flex mt-8">
                   <label class="text-white" for="time">Select Time:</label>
@@ -242,6 +242,22 @@
                   <p class="text-center mt-2">Baby Shower</p>
                 </label>
               </div>
+              <div class="flex items-center  my-4">
+                <div class="border border-gray-200 w-full"></div><span class="px-1">OR</span><div class="border border-gray-200 w-full"></div>
+              </div>
+              <div>
+                <label for="eventname">
+                  <p class="font-bold">Enter Your Event Name:</p>
+                  <input
+                  id="eventname"
+                  type="text"
+                  name="eventname"
+                  class="w-full border py-1 px-2 rounded mt-2"
+
+                  >
+                </label>
+
+              </div>
               <div class="flex gap-4">
                 <button
                   class="bg-black/10 text-black px-6 py-2 rounded shadow mt-8"
@@ -340,28 +356,28 @@
                     type="checkbox"
                     id="giftOption1"
                     name="gift"
-                    value="Rose Heart (Rs 150)"
+                    value="Rose Heart"
                   />
                   <img
                     class="w-[50%] mx-auto"
-                    src="/public/Rose Heart (Rs 150).png"
+                    src="./public/Rose Heart (Rs 150).png"
                     alt=""
                   />
-                  <p class="mt-2 text-center">Rose Heart (Rs 150)</p>
+                  <p class="mt-2 text-center">Rose Heart</p>
                 </label>
                 <label for="giftOption2">
                   <input
                     type="checkbox"
                     id="giftOption2"
                     name="gift"
-                    value="Candle Path (Rs 300)"
+                    value="Candle Path"
                   />
                   <img
                     class="w-[50%] mx-auto"
-                    src="/public/Candle Path (Rs 300).png"
+                    src="./public/Candle Path (Rs 300).png"
                     alt=""
                   />
-                  <p class="mt-2 text-center">Candle Path (Rs 300)</p>
+                  <p class="mt-2 text-center">Candle Path</p>
                 </label>
 
                 <label for="giftOption3">
@@ -369,14 +385,14 @@
                     type="checkbox"
                     id="giftOption3"
                     name="gift"
-                    value="LED Numbers (Rs 200)"
+                    value="LED Numbers"
                   />
                   <img
                     class="w-[50%] mx-auto"
-                    src="/public/LED Numbers (Rs 200).png"
+                    src="./public/LED Numbers (Rs 200).png"
                     alt=""
                   />
-                  <p class="mt-2 text-center">LED Numbers (Rs 200)</p>
+                  <p class="mt-2 text-center">LED Numbers</p>
                 </label>
                 <br />
               </div>
@@ -389,28 +405,28 @@
                     type="checkbox"
                     id="giftOption4"
                     name="gift"
-                    value="Rose Bouquet (Rs 350)"
+                    value="Rose Bouquet"
                   />
                   <img
                     class="w-[50%] mx-auto"
-                    src="/public/Rose Bouquet (Rs 350).png"
+                    src="./public/Rose Bouquet (Rs 350).png"
                     alt=""
                   />
-                  <p class="mt-2 text-center">Rose Bouquet (Rs 350)</p>
+                  <p class="mt-2 text-center">Rose Bouquet</p>
                 </label>
                 <label for="giftOption5">
                   <input
                     type="checkbox"
                     id="giftOption5"
                     name="gift"
-                    value="Small Teddy Bear (Rs 300)"
+                    value="Small Teddy Bear"
                   />
                   <img
                     class="w-[50%] mx-auto"
-                    src="/public/Small Teddy Bear (Rs 300).png"
+                    src="./public/Small Teddy Bear (Rs 300).png"
                     alt=""
                   />
-                  <p class="mt-2 text-center">Small Teddy Bear (Rs 300)</p>
+                  <p class="mt-2 text-center">Small Teddy Bear</p>
                 </label>
 
                 <label for="giftOption6">
@@ -418,14 +434,14 @@
                     type="checkbox"
                     id="giftOption6"
                     name="gift"
-                    value="Small Heart Pillow(Rs 200)"
+                    value="Small Heart Pillow"
                   />
                   <img
                     class="w-[50%] mx-auto"
-                    src="/public/Small Heart Pillow(Rs 200).png"
+                    src="./public/Small Heart Pillow(Rs 200).png"
                     alt=""
                   />
-                  <p class="mt-2 text-center">Small Heart Pillow(Rs 200)</p>
+                  <p class="mt-2 text-center">Small Heart Pillow</p>
                 </label>
                 <br />
               </div>

@@ -1,49 +1,50 @@
+const BookedData = [];
 let currentStep = 1;
 const form = document.getElementById("bookingForm");
 
 const cakeOptions = [
   {
-    name: "Black Forest Cake (500)",
+    name: "Black Forest Cake",
     imageUrl: "./public/Black Forest Cake (500).png",
   },
   {
-    name: "Butterscotch Cake (500)",
+    name: "Butterscotch Cake",
     imageUrl: "./public/Butterscotch Cake (500).png",
   },
   {
-    name: "Chocolate Cake (500)",
+    name: "Chocolate Cake",
     imageUrl: "./public/Chocolate Cake (500).png",
   },
   {
-    name: "Pineapple Cake (500)",
+    name: "Pineapple Cake",
     imageUrl: "./public/Pineapple Cake (500).png",
   },
   {
-    name: "Round Red Velvet Cake (600)",
+    name: "Round Red Velvet Cake",
     imageUrl: "./public/Round Red Velvet Cake (600).png",
   },
   {
-    name: "Blueberry Cake (600)",
+    name: "Blueberry Cake",
     imageUrl: "./public/Blueberry Cake (600).png",
   },
   {
-    name: "Mango Cake (600)",
+    name: "Mango Cake",
     imageUrl: "./public/Mango Cake (600).png",
   },
   {
-    name: "Heart Red Velvet Cake (700)",
+    name: "Heart Red Velvet Cake",
     imageUrl: "./public/Heart Red Velvet Cake (700).png",
   },
   {
-    name: "Death by chocolate Cake (700)",
+    name: "Death by chocolate Cake",
     imageUrl: "./public//Death by chocolate Cake (700).png",
   },
   {
-    name: "Choco Almond Cake (750)",
+    name: "Choco Almond Cake",
     imageUrl: "./public/Choco Almond Cake (750).png",
   },
   {
-    name: "Heart Pinata Cake (850)",
+    name: "Heart Pinata Cake",
     imageUrl: "./public/Heart Pinata Cake (850).png",
   },
 ];
@@ -100,13 +101,33 @@ function createTimeSlotButtons() {
     ];
   }
 
+  const selectedDate = formatDateStringForMySQL(
+    document.getElementById("date").value
+  );
+  const bookingsForDate = BookedData.filter(
+    (booking) => booking.date === selectedDate
+  );
+  // console.log(bookingsForDate);
+
   const timeSlotsContainer = document.getElementById("timeSlots");
 
   const buttonsHTML = timeSlots
-    .map((slot) => {
+    .map((slot, i) => {
+      const isBooked = bookingsForDate.some((booking) => booking.time === slot);
+      // console.log(isBooked);
+
+      const borderColor = isBooked
+        ? "border-4 border-red-500"
+        : "border-4 border-green-500";
+
+      const isDisabled = isBooked ? "disabled" : "";
+
       return `
         <button 
-          class="bg-white text-[12px] flex-grow md:flex-[0_0_200px] text-black px-4 py-2 rounded shadow focus:outline-none"
+
+        id="timeSlots${i}"
+          class="bg-white text-[12px] ${borderColor} flex-grow md:flex-[0_0_200px] text-black px-4 py-2 rounded shadow focus:outline-none"
+          ${isDisabled}
           onclick="selectTime(this, '${slot}')"
         >
           ${slot}
@@ -134,12 +155,21 @@ function selectTime(clickedButton, slot) {
   // Set the selectedTime variable
   selectedTime = slot;
   // Log the selected time
-  console.log("Selected Time:", selectedTime);
+  // console.log("Selected Time:", selectedTime);
 }
 
 // Call function to generate time slot buttons
 createTimeSlotButtons();
 //
+
+function formatDateStringForMySQL(dateString) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${day}${month}${year}`;
+}
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
@@ -150,6 +180,8 @@ form.addEventListener("submit", function (event) {
   const date = document.getElementById("date").value;
   // const time = document.getElementById("time").value;
   const decoration = document.getElementById("decoration").value;
+  const EventName = document.getElementById("eventname").value;
+
   const decorationDetails = document.querySelector(
     'input[name="decoration"]:checked'
   )
@@ -166,24 +198,40 @@ form.addEventListener("submit", function (event) {
   });
 
   var location2 = window.location.pathname;
-  console.log(location2);
+  // console.log(location2);
 
   const bookingData = {
     name,
     email,
     phone,
     guests,
-    date,
+    date: formatDateStringForMySQL(date),
+
     // time:selectedTime,
     time: selectedTime,
     location: location2,
+    EventName,
     decoration,
     decorationDetails,
     cakes,
     gifts,
   };
 
-  console.log("Booking Data:", bookingData);
+  // console.log("Booking Data:", bookingData);
+
+  const jsonData = JSON.stringify(bookingData);
+
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "save_booking.php", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      console.log(xhr.responseText); // Log response from PHP script
+    } else {
+      console.error("Request failed with status:", xhr.status);
+    }
+  };
+  xhr.send(jsonData);
 });
 
 // input vaildation
@@ -290,3 +338,26 @@ function step5() {
 }
 
 // save locally
+
+// function reverseDateFormat(dateString) {
+//   const day = dateString.slice(8, 10);
+//   const month = dateString.slice(5, 7);
+//   const year = dateString.slice(0, 4);
+
+//   return `${year}-${month}-${day}`;
+// }
+
+function fetchEntries() {
+  fetch("fetch_entries.php")
+    .then((response) => response.json())
+    .then((data) => {
+      // console.log("Complete data:", data);
+      data.forEach((rowData) => {
+        BookedData.push(rowData);
+        // addEntryToTable(rowData);
+      });
+    })
+    .catch((error) => console.error("Error fetching entries:", error));
+}
+
+fetchEntries();
