@@ -1,3 +1,13 @@
+function setImageUrl() {
+  if (window.location.pathname.includes("vip")) {
+    document.getElementById("imagePlaceholder").src =
+      "https://i0.wp.com/youvibe.in/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-26-at-12.15.50-AM-1.jpeg?w=1280&ssl=1";
+  } else {
+    document.getElementById("imagePlaceholder").src = "./public/Regular.jpg";
+  }
+}
+setImageUrl();
+
 const BookedData = [];
 let currentStep = 1;
 const form = document.getElementById("bookingForm");
@@ -49,6 +59,8 @@ const cakeOptions = [
   },
 ];
 const cakeOptionsContainer = document.getElementById("cakeOptionsContainer");
+
+// cake option
 
 function generateCakeOptions() {
   cakeOptionsContainer.innerHTML = cakeOptions
@@ -107,14 +119,12 @@ function createTimeSlotButtons() {
   const bookingsForDate = BookedData.filter(
     (booking) => booking.date === selectedDate
   );
-  // console.log(bookingsForDate);
 
   const timeSlotsContainer = document.getElementById("timeSlots");
 
   const buttonsHTML = timeSlots
     .map((slot, i) => {
       const isBooked = bookingsForDate.some((booking) => booking.time === slot);
-      // console.log(isBooked);
 
       const borderColor = isBooked
         ? "border-4 border-red-500"
@@ -145,22 +155,15 @@ let selectedTime = "";
 function selectTime(clickedButton, slot) {
   const buttons = document.querySelectorAll("#timeSlots button");
   buttons.forEach((button) => {
-    button.classList.remove("bg-green-400"); // Deselect all buttons
-    button.classList.add("bg-white"); // Deselect all buttons
+    button.classList.remove("bg-green-400");
+    button.classList.add("bg-white");
   });
 
-  clickedButton.classList.remove("bg-white"); // Select the clicked button
-  clickedButton.classList.add("bg-green-400"); // Select the clicked button
-
-  // Set the selectedTime variable
+  clickedButton.classList.remove("bg-white");
+  clickedButton.classList.add("bg-green-400");
   selectedTime = slot;
-  // Log the selected time
-  // console.log("Selected Time:", selectedTime);
 }
-
-// Call function to generate time slot buttons
 createTimeSlotButtons();
-//
 
 function formatDateStringForMySQL(dateString) {
   const date = new Date(dateString);
@@ -181,6 +184,7 @@ form.addEventListener("submit", function (event) {
   // const time = document.getElementById("time").value;
   const decoration = document.getElementById("decoration").value;
   const EventName = document.getElementById("eventname").value;
+  const others = document.getElementById("others").value;
 
   const decorationDetails = document.querySelector(
     'input[name="decoration"]:checked'
@@ -212,26 +216,40 @@ form.addEventListener("submit", function (event) {
     location: location2,
     EventName,
     decoration,
+    others,
     decorationDetails,
     cakes,
     gifts,
   };
 
-  // console.log("Booking Data:", bookingData);
-
   const jsonData = JSON.stringify(bookingData);
 
   const xhr = new XMLHttpRequest();
+  // xhr.open("POST", "payment/response.php", true);
   xhr.open("POST", "save_booking.php", true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onload = function () {
     if (xhr.status === 200) {
-      console.log(xhr.responseText); // Log response from PHP script
+      console.log(xhr.responseText);
+      const response = JSON.parse(xhr.responseText);
     } else {
-      console.error("Request failed with status:", xhr.status);
+      return console.error("Request failed with status:", xhr.status);
     }
   };
   xhr.send(jsonData);
+
+  const encodedData = encodeURIComponent(jsonData);
+  // const redirectUrl = "http://localhost/mysql/payment/?data=" + encodedData;
+  if(window.location.pathname.includes("vip")){
+      
+    const redirectUrl = "https://www.youvibe.in/dommasandra-banglore-vip/payment/?data=" + encodedData;
+    }
+    else{
+        const redirectUrl = "https://www.youvibe.in/dommasandra-banglore-regular/payment/?data=" + encodedData;
+        
+    }
+
+  window.location.href = redirectUrl;
 });
 
 // input vaildation
@@ -349,15 +367,25 @@ function step5() {
 
 function fetchEntries() {
   fetch("fetch_entries.php")
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      return response.json();
+    })
     .then((data) => {
-      // console.log("Complete data:", data);
+      console.log("Complete data:", data);
       data.forEach((rowData) => {
         BookedData.push(rowData);
-        // addEntryToTable(rowData);
       });
     })
-    .catch((error) => console.error("Error fetching entries:", error));
+    .catch((error) => {
+      if (error instanceof SyntaxError) {
+        console.log("Failed to parse JSON:", error);
+      } else {
+        console.log("Error fetching entries:", error);
+      }
+    });
 }
 
 fetchEntries();

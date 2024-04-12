@@ -20,7 +20,7 @@ if ($conn->connect_error) {
 }
 
 // Prepare SQL query
-$sql = "INSERT INTO bookings(name, email, phone, guests, date, time, location, EventName, decoration, decorationDetails, cakes, gifts) 
+$sql = "INSERT INTO bookings(name, email, phone, guests, date, time, location, EventName, decoration , decorationDetails, cakes, gifts,others) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 
@@ -36,10 +36,14 @@ $stmt->bind_param(
     $bookingData['time'],
     $bookingData['location'],
     $bookingData['EventName'],
+    $bookingData['anydecoration'],
     $bookingData['decoration'],
     $bookingData['decorationDetails'],
     implode(", ", $bookingData['cakes']), // Convert cakes array to string
-    implode(", ", $bookingData['gifts']) // Convert gifts array to string
+    implode(", ", $bookingData['gifts']),
+    $bookingData['others']
+    
+     // Convert gifts array to string
 );
 
 if ($stmt->execute()) {
